@@ -3,20 +3,27 @@ import React, { useState } from 'react';
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
   const handleSearch = () => {
     onSearch(query);
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex justify-center mb-4">
       <input
         type="text"
+        className="w-full md:w-1/2 px-4 py-2 border rounded-l-lg focus:outline-none focus:ring-blue-600 outline-none"
+        placeholder="Search for properties..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="border p-2 rounded"
-        placeholder="Search properties..."
+        onChange={handleInputChange}
       />
-      <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded">
+      <button
+        onClick={handleSearch}
+        className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition duration-300"
+      >
         Search
       </button>
     </div>
