@@ -1,25 +1,109 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import backgroundImage from '../assets/images/6.jpg'; // Add your background image here
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import backgroundImage from "../assets/images/6.jpg";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  let navigate = useNavigate();
+
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (credentials.password !== credentials.confirmPassword) {
+      toast.error("Passwords do not match.", {
+        autoClose: 2000,
+      });
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      setCredentials({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Registration successful!", {
+          autoClose: 2000,
+        });
+        setTimeout(() => navigate("/login"), 2000);
+      } else {
+        toast.error(data.msg || "Registration failed. Please try again.", {
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again later.", {
+        autoClose: 2000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const [showPass, setShowPass] = useState("password");
+  const [showConfirmPass, setShowConfirmPass] = useState("password");
+
+  const togglePass = () => {
+    if (showPass === "password") {
+      setShowPass("");
+    } else {
+      setShowPass("password");
+    }
+  };
+
+  const toggleConfirmPass = () => {
+    if (showConfirmPass === "password") {
+      setShowConfirmPass("");
+    } else {
+      setShowConfirmPass("password");
+    }
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center p-8"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
+      <ToastContainer />
       <motion.div
         className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md backdrop-filter backdrop-blur-lg bg-opacity-70 shadow-gray-800"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Join Us</h1>
-        <p className="text-center font-semibold text-gray-700 mb-4">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
+          Join Us
+        </h1>
+        <p className="text-center text-gray-700 mb-4">
           Create an account to get started.
         </p>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -28,6 +112,9 @@ const Register = () => {
             <label className="block text-gray-700 mb-1">Full Name</label>
             <input
               type="text"
+              name="name"
+              value={credentials.name}
+              onChange={onChange}
               placeholder="Enter your full name"
               className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
             />
@@ -40,6 +127,9 @@ const Register = () => {
             <label className="block text-gray-700 mb-1">Email</label>
             <input
               type="email"
+              name="email"
+              value={credentials.email}
+              onChange={onChange}
               placeholder="Enter your email"
               className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
             />
@@ -50,11 +140,22 @@ const Register = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <label className="block text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-            />
+            <div className="relative">
+              <input
+                type={showPass}
+                name="password"
+                value={credentials.password}
+                onChange={onChange}
+                placeholder="Enter your password"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+              />
+              <button type="button"
+                onClick={togglePass}
+                className="absolute right-3 top-3 cursor-pointer"
+              >
+                {showPass === "password" ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -62,11 +163,22 @@ const Register = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <label className="block text-gray-700 mb-1">Confirm Password</label>
-            <input
-              type="password"
-              placeholder="Confirm your password"
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPass}
+                name="confirmPassword"
+                value={credentials.confirmPassword}
+                onChange={onChange}
+                placeholder="Confirm your password"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+              />
+              <span
+                onClick={toggleConfirmPass}
+                className="absolute right-3 top-3 cursor-pointer"
+              >
+                {showConfirmPass === "password" ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
           </motion.div>
           <motion.button
             type="submit"
@@ -74,7 +186,7 @@ const Register = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Register
+            {isLoading ? "Registering..." : "Register"}
           </motion.button>
         </form>
         <motion.div
@@ -84,7 +196,10 @@ const Register = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <p className="text-gray-700">
-            Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-500 hover:underline">
+              Login
+            </Link>
           </p>
         </motion.div>
       </motion.div>
