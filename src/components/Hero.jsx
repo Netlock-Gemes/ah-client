@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import img from '../assets/images/5.jpg';
+import img from '../assets/images/14.jpg';
 import { FaAnglesDown } from "react-icons/fa6";
 
 const Hero = ({ scrollToNextSection }) => {
@@ -41,7 +41,7 @@ const Hero = ({ scrollToNextSection }) => {
                     </button>
                 </motion.a>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-4">
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-16 md:mb-4">
                 <motion.a
                     href="#property-listings"
                     className="text-white animate-bounce"

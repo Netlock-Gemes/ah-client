@@ -30,7 +30,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col mx-auto bg-gray-200">
+    <div className="flex flex-col mx-auto bg-gray-300">
       <Hero scrollToNextSection={scrollToNextSection} />
       <div ref={propertySectionRef} className="pt-20 p-8">
         <h1 className="text-2xl md:text-4xl font-bold mb-4 text-center">Property Listings</h1>

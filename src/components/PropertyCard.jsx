@@ -5,7 +5,7 @@ import img from '../assets/images/2.jpg';
 const PropertyCard = ({ property }) => {
   return (
     <motion.div 
-      className="bg-white border border-gray-200 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
+      className="bg-white border border-gray-200 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between hover:shadow-teal-800"
       whileHover={{ scale: 1.02 }}
     >
       <img src={img} alt={property.name} className="w-full h-48 object-cover rounded-md mb-4" />
