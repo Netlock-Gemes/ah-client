@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/images/6.jpg";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import authContext from "../context/auth/authContext";
 
 const Register = () => {
+  const { setIsLogin, isLogin } = useContext(authContext);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/");
+    }
+  }, [isLogin, navigate]);
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -14,7 +24,6 @@ const Register = () => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  let navigate = useNavigate();
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -31,13 +40,16 @@ const Register = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_HOST}/api/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+        }
+      );
 
       setCredentials({
         name: "",
@@ -48,10 +60,12 @@ const Register = () => {
       const data = await response.json();
 
       if (response.ok) {
+        setIsLogin(true);
+        localStorage.setItem("token", data.token);
         toast.success("Registration successful!", {
           autoClose: 2000,
         });
-        setTimeout(() => navigate("/login"), 2000);
+        setTimeout(() => navigate("/"), 2000);
       } else {
         toast.error(data.msg || "Registration failed. Please try again.", {
           autoClose: 2000,
@@ -70,19 +84,11 @@ const Register = () => {
   const [showConfirmPass, setShowConfirmPass] = useState("password");
 
   const togglePass = () => {
-    if (showPass === "password") {
-      setShowPass("");
-    } else {
-      setShowPass("password");
-    }
+    setShowPass(showPass === "password" ? "" : "password");
   };
 
   const toggleConfirmPass = () => {
-    if (showConfirmPass === "password") {
-      setShowConfirmPass("");
-    } else {
-      setShowConfirmPass("password");
-    }
+    setShowConfirmPass(showConfirmPass === "password" ? "" : "password");
   };
 
   return (
@@ -100,7 +106,7 @@ const Register = () => {
         <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
           Join Us
         </h1>
-        <p className="text-center text-gray-700 mb-4">
+        <p className="text-center font-semibold text-gray-700 mb-4">
           Create an account to get started.
         </p>
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -117,6 +123,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Enter your full name"
               className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+              required
             />
           </motion.div>
           <motion.div
@@ -132,6 +139,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Enter your email"
               className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+              required
             />
           </motion.div>
           <motion.div
@@ -148,8 +156,11 @@ const Register = () => {
                 onChange={onChange}
                 placeholder="Enter your password"
                 className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+                required
+                minLength={4}
               />
-              <button type="button"
+              <button
+                type="button"
                 onClick={togglePass}
                 className="absolute right-3 top-3 cursor-pointer"
               >
@@ -171,6 +182,8 @@ const Register = () => {
                 onChange={onChange}
                 placeholder="Confirm your password"
                 className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+                required
+                minLength={4}
               />
               <span
                 onClick={toggleConfirmPass}

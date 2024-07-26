@@ -11,13 +11,13 @@ const AuthState = (props) => {
     const getLoggedInUserData = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
-            navigate('/register');
+            navigate('/login');
             setIsLogin(false);
             return;
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_HOST}/api/auth/profile`, {
+            const response = await fetch(`${process.env.REACT_APP_HOST}/api/auth/user`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

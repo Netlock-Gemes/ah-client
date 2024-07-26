@@ -1,23 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import SearchBar from './SearchBar';
 import PropertyCard from './PropertyCard';
-import sampleProperties from '../constants/sampleProperties';
 import Hero from './Hero';
+import authContext from '../context/auth/authContext';
 
 const Home = () => {
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
-  const propertySectionRef = useRef(null); // Ref for scrolling
+  const propertySectionRef = useRef(null);
+  const { isLogin, checkLogin } = useContext(authContext);
 
   useEffect(() => {
-    // Simulate fetching data
-    setProperties(sampleProperties);
-    setFilteredProperties(sampleProperties);
+    checkLogin();
+  }, [isLogin]);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_HOST}/api/properties/all`, {
+          headers: {
+            'x-auth-token': localStorage.getItem('token')
+          }
+        });
+        const data = await response.json();
+        setProperties(data);
+        setFilteredProperties(data);
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    };
+
+    fetchProperties();
   }, []);
 
   const handleSearch = (query) => {
     const filtered = properties.filter((property) =>
-      property.name.toLowerCase().includes(query.toLowerCase()) ||
+      property.title.toLowerCase().includes(query.toLowerCase()) ||
       property.location.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredProperties(filtered);
@@ -35,7 +53,7 @@ const Home = () => {
       <div ref={propertySectionRef} className="pt-20 p-8">
         <h1 className="text-2xl md:text-4xl font-bold mb-4 text-center">Property Listings</h1>
         <SearchBar onSearch={handleSearch} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+        <div className="flex flex-wrap md:mx-10 gap-5 mt-20 mb-10 justify-around">
           {filteredProperties.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}

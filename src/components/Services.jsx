@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import authContext from '../context/auth/authContext';
 
 ChartJS.register(
   CategoryScale,
@@ -21,6 +22,14 @@ ChartJS.register(
 );
 
 const Services = () => {
+
+  const { isLogin, checkLogin} =
+    useContext(authContext);
+
+  useEffect(() => {
+    checkLogin();
+  }, [isLogin]);
+
   const [loanAmount, setLoanAmount] = useState(5000000); // Default value: 5000000
   const [interestRate, setInterestRate] = useState(7.5); // Default value: 7.5
   const [tenure, setTenure] = useState(20); // Default value: 20

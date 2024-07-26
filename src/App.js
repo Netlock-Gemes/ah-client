@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AuthState from './context/auth/AuthState';
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path='/services' element={<Services />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/profile' element={<Profile />} />
           </Routes>
           <Footer />
         </AuthState>
