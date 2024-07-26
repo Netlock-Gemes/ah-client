@@ -86,10 +86,10 @@ const Services = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 md:py-10">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-300 p-4 md:pt-24">
       <h1 className="text-3xl font-bold mb-6 text-center">Our Services</h1>
       
-      <div className="bg-[#e6e6e6] p-6 rounded-lg shadow-lg mb-6 text-lg">
+      <div className="bg-white w-full max-w-6xl p-6 rounded-lg shadow-lg mb-6 text-lg">
         <motion.h2 
           className="text-2xl font-semibold mb-4 text-blue-700"
           initial={{ opacity: 0, y: -20 }}
@@ -182,7 +182,7 @@ const Services = () => {
       </div>
 
       {emi !== null && (
-        <div className="bg-[#e6e6e6] p-6 rounded-lg shadow-lg mb-6 text-lg md:h-[26rem] h-[25rem] pb-11 md:pb-14"> {/* Ensure the container has a defined height */}
+        <div className="bg-[#e6e6e6] p-6 rounded-lg shadow-lg mb-6 text-lg md:h-[26rem] h-[25rem] pb-11 md:pb-14 w-full max-w-6xl"> {/* Ensure the container has a defined height */}
           <motion.h2 
             className="text-2xl font-semibold mb-4 text-blue-700"
             initial={{ opacity: 0, y: -20 }}

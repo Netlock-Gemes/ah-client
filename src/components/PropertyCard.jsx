@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import defaultImg from "../assets/images/2.jpg";
+import { useNavigate } from "react-router-dom";
 
 const PropertyCard = ({ property }) => {
+  const navigate = useNavigate();
   // Ensure the image URL is properly constructed or fallback to defaultImg
   const imageUrl =
     property.images && property.images.length > 0
@@ -13,6 +15,10 @@ const PropertyCard = ({ property }) => {
   const formattedPrice = property.price
     ? `₹${property.price.toLocaleString("en-IN")}`
     : "₹0";
+
+  const handleViewDetails = () => {
+    navigate(`/property/${property._id}`);
+  };
 
   return (
     <motion.div
@@ -35,6 +41,7 @@ const PropertyCard = ({ property }) => {
         <p className="text-gray-600">{property.description}</p>
       </div>
       <motion.button
+        onClick={handleViewDetails}
         className="mt-4 py-2 px-4 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 "
         whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         whileTap={{ scale: 0.95 }}

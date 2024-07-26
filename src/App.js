@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AuthState from './context/auth/AuthState';
 import Profile from './pages/Profile';
+import PropertyDetails from './pages/PropertyDetails';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path="/property/:id" element={<PropertyDetails />} />
           </Routes>
           <Footer />
         </AuthState>
