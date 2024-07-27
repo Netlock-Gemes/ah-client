@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaEnvelope,
@@ -20,6 +20,12 @@ const animationVariants = {
 };
 
 const ContactUs = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -108,13 +114,13 @@ const ContactUs = () => {
       </div>
 
       {/* Contact Form Section */}
-      <div className="flex justify-center items-center px-6 py-16 backdrop-filter backdrop-blur-lg bg-opacity-70 shadow-gray-800">
+      <div className="flex justify-center items-center px-6 py-16 shadow-gray-800">
         <motion.div
           initial="initial"
           animate="animate"
           variants={animationVariants.fadeIn}
           viewport={{ once: true }}
-          className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl backdrop-filter backdrop-blur-lg bg-opacity-70 shadow-gray-800"
+          className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl shadow-gray-800"
         >
           <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
           <form onSubmit={handleSubmit} className="space-y-4">

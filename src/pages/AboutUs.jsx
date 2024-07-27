@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 import img1 from '../assets/images/4.jpg';
@@ -20,6 +20,11 @@ const animationVariants = {
 };
 
 const AboutUs = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="bg-gray-200">
       {/* Hero Section */}

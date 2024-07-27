@@ -30,6 +30,10 @@ const Services = () => {
     checkLogin();
   }, [isLogin]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [loanAmount, setLoanAmount] = useState(5000000);
   const [interestRate, setInterestRate] = useState(7.5);
   const [tenure, setTenure] = useState(20);

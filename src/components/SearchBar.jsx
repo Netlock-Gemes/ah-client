@@ -7,12 +7,13 @@ const SearchBar = ({ onSearch }) => {
     setQuery(e.target.value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     onSearch(query);
   };
 
   return (
-    <div className="flex justify-center mb-4">
+    <form onSubmit={handleSearch} className="flex justify-center mb-4">
       <input
         type="text"
         className="w-full md:w-1/2 px-4 py-2 border rounded-l-lg focus:outline-none focus:ring-blue-600 outline-none"
@@ -21,12 +22,11 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleInputChange}
       />
       <button
-        onClick={handleSearch}
         className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition duration-300"
       >
         Search
       </button>
-    </div>
+    </form>
   );
 };
 

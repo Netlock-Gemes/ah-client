@@ -53,8 +53,8 @@ const Footer = () => {
               Shop No.3, New Surya Kiran CHS. Ltd., Opp. Galaxy Hotel, S.T.
               Depot Rd., Nallasopara (W) - 401 203.
             </p>
-            <p className="text-gray-400">Phone: +91 7977416857</p>
-            <p className="text-gray-400">Email: hamdankachhawa96@gmail.com</p>
+            <p className="text-gray-400 pt-2">Phone: +91 7977416857</p>
+            <p className="text-gray-400 pt-2">Email: hamdankachhawa96@gmail.com</p>
           </div>
           <div className="w-full md:w-1/4">
             <h2 className="text-xl font-bold md:mb-4 mb-1">Follow Us</h2>

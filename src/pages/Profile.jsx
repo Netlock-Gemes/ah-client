@@ -37,6 +37,7 @@ const Profile = () => {
     };
 
     fetchUser();
+    window.scrollTo(0, 0);
   }, []);
 
   if (loading) {
@@ -48,9 +49,11 @@ const Profile = () => {
   }
 
   if (!user) {
-    <div className="flex min-h-screen justify-center items-center">
-      <div className="text-lg text-gray-600">User not found</div>
-    </div>;
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        <div className="text-lg text-gray-600">User not found</div>
+      </div>
+    );
   }
 
   return (

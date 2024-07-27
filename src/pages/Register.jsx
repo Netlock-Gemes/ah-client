@@ -93,7 +93,7 @@ const Register = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center p-8"
+      className="min-h-screen flex items-center justify-center bg-cover bg-center p-8 pt-24"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <ToastContainer />

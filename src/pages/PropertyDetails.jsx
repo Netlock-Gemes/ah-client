@@ -1,25 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import {
+  FaLocationArrow,
+  FaRegStar,
+  FaEdit,
+  FaPhone,
+  FaRupeeSign
+} from "react-icons/fa";
+import { GiCheckMark } from "react-icons/gi";
 import defaultImg from "../assets/images/2.jpg";
+import authContext from "../context/auth/authContext";
+import EditPropertyModal from "../components/EditPropertyModal";
+import UserList from "../components/UserList";
 
 const PropertyDetails = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [interested, setInterested] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [users, setUsers] = useState([]);
+  const { loggedInUserData } = useContext(authContext);
 
   useEffect(() => {
-    // Scroll to the top of the page when component mounts
     window.scrollTo(0, 0);
 
-    const fetchProperty = async () => {
+    const fetchData = async () => {
       try {
-        // Fetch property details
         const propertyResponse = await fetch(
           `${process.env.REACT_APP_HOST}/api/properties/${id}`,
           {
@@ -34,7 +45,6 @@ const PropertyDetails = () => {
         const propertyData = await propertyResponse.json();
         setProperty(propertyData);
 
-        // Check if the user is already interested in the property
         const userResponse = await fetch(
           `${process.env.REACT_APP_HOST}/api/auth/user`,
           {
@@ -47,22 +57,37 @@ const PropertyDetails = () => {
           throw new Error("User not found");
         }
         const userData = await userResponse.json();
-
-        // Check if the property ID is in the list of interested properties
         const isInterested = userData.interestedProperties.some(
-            (property) => property._id === id
-          );
+          (property) => property._id === id
+        );
         setInterested(isInterested);
+
+        if (loggedInUserData?.role === "admin") {
+          // Fetch all users only if the logged-in user is an admin
+          const usersResponse = await fetch(
+            `${process.env.REACT_APP_HOST}/api/auth/users`,
+            {
+              headers: {
+                "x-auth-token": localStorage.getItem("token"),
+              },
+            }
+          );
+          if (!usersResponse.ok) {
+            throw new Error("Users not found");
+          }
+          const usersData = await usersResponse.json();
+          setUsers(usersData);
+        }
       } catch (error) {
-        toast.error(error.message || "Error fetching property details");
-        console.error("Error fetching property details:", error);
+        toast.error(error.message || "Error fetching data");
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProperty();
-  }, [id]);
+    fetchData();
+  }, [id, loggedInUserData?.role]);
 
   const handleInterestedClick = async () => {
     try {
@@ -119,14 +144,14 @@ const PropertyDetails = () => {
       : [defaultImg];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-300 p-4 md:pt-24">
+    <div className="min-h-screen flex flex-col items-center bg-gray-300 p-4 pt-24">
       <motion.div
-        className="bg-white p-4 md:p-8 rounded-lg shadow-lg w-full max-w-xl md:max-w-3xl backdrop-filter backdrop-blur-lg bg-opacity-80 shadow-gray-800"
-        initial={{ opacity: 0, y: -20 }}
+        className="p-3 md:p-8 bg-white rounded-lg w-full max-w-2xl md:max-w-4xl backdrop-filter backdrop-blur-lg bg-opacity-90"
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
       >
-        <h1 className="text-4xl font-bold mb-6 text-center text-blue-800">
+        <h1 className="text-3xl font-extrabold mb-6 text-center text-blue-900">
           {property.title}
         </h1>
         <Carousel
@@ -139,40 +164,109 @@ const PropertyDetails = () => {
           className="mb-8"
         >
           {imageUrls.map((url, index) => (
-            <div
+            <motion.div
               key={index}
-              className="flex justify-center items-center md:h-96 h-60 rounded-lg overflow-hidden"
+              className="flex justify-center items-center h-60 md:h-96 rounded-lg overflow-hidden bg-gray-200"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
               <img
                 src={url}
                 alt={`Property ${index + 1}`}
-                className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
+                className="object-cover w-full h-full"
               />
-            </div>
+            </motion.div>
           ))}
         </Carousel>
-        <div className="flex flex-col items-center">
-          <p className="text-gray-700 mb-4 text-lg font-semibold">
-            {property.location}
-          </p>
-          <p className="text-gray-800 font-semibold text-3xl mb-4">
-            ₹{property.price.toLocaleString("en-IN")}
-          </p>
-          <p className="text-gray-600 text-center mb-6">
-            {property.description}
-          </p>
-          <button
-            onClick={handleInterestedClick}
-            className={`py-3 px-8 rounded-full transition duration-300 ${
-              interested
-                ? "bg-green-600 text-white"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-            }`}
+        <motion.div
+          className="flex flex-col items-center py-6 bg-gray-100 border border-gray-700 rounded-lg shadow-md md:space-y-6 space-y-3"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex justify-center items-center gap-1">
+            <FaLocationArrow className="text-blue-600 h-4 w-4" />
+            <p className="text-gray-700 text-lg font-semibold">
+              {property.location}
+            </p>
+          </div>
+          <div className="flex justify-center items-center">
+            <FaRupeeSign className="text-green-600 h-7 w-7" />
+            <p className="text-gray-900 text-4xl font-bold">
+              {property.price.toLocaleString("en-IN")}
+            </p>
+          </div>
+          <p className="text-gray-600 text-base md:text-lg text-center">{property.description}</p>
+
+          <div className="flex justify-center items-center gap-3">
+            <motion.button
+              onClick={handleInterestedClick}
+              className={`md:py-3 md:px-8 py-2 px-3 flex justify-center items-center rounded-full transition duration-300 ${
+                interested
+                  ? "bg-green-600 text-white"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
+              whileHover={{ scale: 1.05 }}
+            >
+              {interested ? (
+                <>
+                  <GiCheckMark className="inline-block mr-2" /> Interested!
+                </>
+              ) : (
+                <>
+                  <FaRegStar className="inline-block mr-2" /> I am Interested
+                </>
+              )}
+            </motion.button>
+            {loggedInUserData?.role === "admin" ? (
+              <motion.button
+                onClick={() => setShowModal(true)}
+                className="md:py-3 md:px-8 py-2 px-3 flex justify-center items-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition duration-300"
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaEdit className="inline-block mr-2" /> Edit Property
+              </motion.button>
+            ) : (
+              <motion.button
+                onClick={() => {
+                  toast.success("We will connect you shortly!");
+                }}
+                className="md:py-3 md:px-8 py-2 px-3 flex justify-center items-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition duration-300"
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaPhone className="inline-block mr-2" /> Arrange Call
+              </motion.button>
+            )}
+          </div>
+        </motion.div>
+        {loggedInUserData?.role === "admin" && (
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            {interested ? "Interested!" : "I am Interested"}
-          </button>
-        </div>
+            <h2 className="text-2xl font-extrabold text-blue-900 mb-4 text-center">
+              Interested Users
+            </h2>
+            <UserList
+              users={users.filter((user) =>
+                property.interestedBy.includes(user._id)
+              )}
+            />
+          </motion.div>
+        )}
       </motion.div>
+      {showModal && (
+        <EditPropertyModal
+          property={property}
+          onClose={() => setShowModal(false)}
+          onSave={(updatedProperty) => {
+            setProperty(updatedProperty);
+            setShowModal(false);
+          }}
+        />
+      )}
       <ToastContainer />
     </div>
   );

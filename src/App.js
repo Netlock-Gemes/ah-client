@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import PropertyDetails from './pages/PropertyDetails';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import AdminDashboard from './pages/AdminDashboard';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/property/:id" element={<PropertyDetails />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>
           <Footer />
         </AuthState>
