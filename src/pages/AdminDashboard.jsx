@@ -105,7 +105,7 @@ const AdminDashboard = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <UserList users={users} />
+          <UserList users={users} setUsers={setUsers} /> {/* Pass setUsers here */}
           <PropertyList properties={properties} users={users} />
           <AddPropertyForm onAddProperty={handleAddProperty} />
         </motion.div>

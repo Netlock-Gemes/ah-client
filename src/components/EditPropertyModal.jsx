@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const EditPropertyModal = ({ property, onClose, onSave }) => {
   const [updatedProperty, setUpdatedProperty] = useState({
     ...property,
-    images: [] // Assuming images are handled separately
+    images: []
   });
 
   const handleInputChange = (e) => {
@@ -48,7 +48,7 @@ const EditPropertyModal = ({ property, onClose, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 px-4">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Edit Property</h2>
         <div className="mb-4">
@@ -93,13 +93,13 @@ const EditPropertyModal = ({ property, onClose, onSave }) => {
         <div className="flex justify-between mt-6">
           <button
             onClick={onClose}
-            className="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600"
+            className="py-2 px-8 bg-gray-500 text-white rounded-full hover:bg-gray-600"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="py-2 px-8 bg-blue-600 text-white rounded-full hover:bg-blue-700"
           >
             Save
           </button>

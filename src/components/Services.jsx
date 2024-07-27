@@ -94,7 +94,7 @@ const Services = () => {
       <div className="absolute inset-0 bg-black opacity-50"></div>
       
       <motion.h1 
-        className="relative text-4xl md:text-6xl font-bold mb-6 text-center z-10"
+        className="relative text-4xl md:text-5xl font-bold mb-6 text-center z-10"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}

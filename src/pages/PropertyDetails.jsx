@@ -9,7 +9,7 @@ import {
   FaRegStar,
   FaEdit,
   FaPhone,
-  FaRupeeSign
+  FaRupeeSign,
 } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 import defaultImg from "../assets/images/2.jpg";
@@ -146,7 +146,7 @@ const PropertyDetails = () => {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-300 p-4 pt-24">
       <motion.div
-        className="p-3 md:p-8 bg-white rounded-lg w-full max-w-2xl md:max-w-4xl backdrop-filter backdrop-blur-lg bg-opacity-90"
+        className="p-3 md:p-8 bg-white rounded-lg w-full max-w-2xl md:max-w-4xl backdrop-filter backdrop-blur-lg bg-opacity-90 shadow-lg"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -161,7 +161,7 @@ const PropertyDetails = () => {
           autoPlay
           interval={5000}
           transitionTime={700}
-          className="mb-8"
+          className="mb-8 rounded-lg overflow-hidden shadow-md"
         >
           {imageUrls.map((url, index) => (
             <motion.div
@@ -196,7 +196,9 @@ const PropertyDetails = () => {
               {property.price.toLocaleString("en-IN")}
             </p>
           </div>
-          <p className="text-gray-600 text-base md:text-lg text-center">{property.description}</p>
+          <p className="text-gray-600 text-base md:text-lg text-center">
+            {property.description}
+          </p>
 
           <div className="flex justify-center items-center gap-3">
             <motion.button
@@ -250,6 +252,7 @@ const PropertyDetails = () => {
               Interested Users
             </h2>
             <UserList
+              showConnectButton={true}
               users={users.filter((user) =>
                 property.interestedBy.includes(user._id)
               )}
