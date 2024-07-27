@@ -38,7 +38,7 @@ const AboutUs = () => {
         >
           <h1 className="text-5xl font-bold mb-4">Who We Are</h1>
           <p className="text-xl mb-8 max-w-xl mx-auto">
-            At [Your Company Name], our mission is to deliver innovative real estate solutions tailored to meet the unique needs of each client.
+            At A.H. Enterprises, our mission is to deliver innovative real estate solutions tailored to meet the unique needs of each client.
           </p>
           <div className="flex justify-center gap-16">
             <div className="text-center">

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import img from '../assets/images/14.jpg';
 import { FaAnglesDown } from "react-icons/fa6";
+import logo1 from '../assets/images/logo1.png';
 
 const Hero = ({ scrollToNextSection }) => {
     const backgroundImageUrl = `url(${img})`;
@@ -13,6 +14,15 @@ const Hero = ({ scrollToNextSection }) => {
         >
             <div className="absolute inset-0 bg-black bg-opacity-60"></div>
             <div className="relative z-10 flex flex-col justify-center items-center text-center text-white p-4 h-full">
+                {/* Logo with animation */}
+                <motion.img
+                    src={logo1}
+                    alt="Company Logo"
+                    className="w-32 mb-6 h-auto bg-blue-400/60 rounded-full"
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                />
                 <motion.h1
                     className="text-4xl md:text-6xl font-bold mb-4"
                     initial={{ opacity: 0, y: -50 }}
@@ -30,7 +40,7 @@ const Hero = ({ scrollToNextSection }) => {
                     Your trusted real estate consultant
                 </motion.p>
                 <motion.a
-                    onClick={scrollToNextSection} // Handle click event to scroll
+                    onClick={scrollToNextSection}
                     className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-700 hover:to-green-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}

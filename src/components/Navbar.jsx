@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import authContext from "../context/auth/authContext";
 import blankprofile from "../assets/images/blankprofile.jpg";
-// import logo from '../assets/images/logo.png'; // Ensure you have a logo image
+import logo from '../assets/images/logo1.png';
 
 const dropdownVariants = {
   open: { opacity: 1, y: 0, display: "block" },
@@ -47,7 +47,7 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-blue-700 to-indigo-700 p-4 fixed top-0 z-30 w-full shadow-md text-lg shadow-[#19384e]">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          {/* <img src={logo} alt="A.H. Enterprises" className="h-10 w-10 mr-3" /> */}
+          <img src={logo} alt="A.H. Enterprises" className="h-[3rem] w-[3.5rem] mr-3" />
           <Link to={'/'} className="text-white text-2xl font-bold">A.H. Enterprises</Link>
         </div>
         <div className="block lg:hidden">
