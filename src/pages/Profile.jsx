@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import backgroundImage from "../assets/images/6.jpg";
 import nothingImg from "../assets/images/nothing.png";
 import PropertyCard from "../components/PropertyCard";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -48,13 +49,13 @@ const Profile = () => {
 
   if (!user) {
     <div className="flex min-h-screen justify-center items-center">
-        <div className="text-lg text-gray-600">User not found</div>
-      </div>
+      <div className="text-lg text-gray-600">User not found</div>
+    </div>;
   }
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center bg-cover bg-center p-8 pt-32"
+      className="min-h-screen flex flex-col items-center bg-cover bg-center p-8 pt-24"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <motion.div
@@ -100,6 +101,19 @@ const Profile = () => {
             </label>
             <p className="p-2 rounded bg-gray-100">{user.role}</p>
           </motion.div>
+          {user.role === "admin" ? (
+            <motion.div
+              className="mt-4 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 "
+              whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Link to={"/admin-dashboard"} className="w-full py-2 px-4 flex justify-center items-center">
+                Open Admin Dashboard
+              </Link>
+            </motion.div>
+          ) : (
+            <></>
+          )}
         </div>
       </motion.div>
 

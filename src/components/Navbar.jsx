@@ -234,7 +234,7 @@ const Navbar = () => {
                   >
                     <Link
                       to={"/profile"}
-                      className="flex px-4 py-2 text-sm text-gray-700 hover:bg-white p-8 hoverLrounded-lg shadow-lg w-full max-w-md backdrop-filter backdrop-blur-lg bg-opacity-70"
+                      className="flex px-4 py-2 text-sm text-gray-700 hover:bg-white p-8 hoverLrounded-lg w-full max-w-md backdrop-filter backdrop-blur-lg bg-opacity-70"
                       role="menuitem"
                       tabIndex="-1"
                       onClick={() => handleMenuClick("Profile")}
@@ -242,7 +242,7 @@ const Navbar = () => {
                       Profile
                     </Link>
                     <button
-                      className="flex px-4 py-2 text-sm text-gray-700 hover:bg-white p-8 hoverLrounded-lg shadow-lg w-full max-w-md backdrop-filter backdrop-blur-lg bg-opacity-70"
+                      className="flex px-4 py-2 text-sm text-gray-700 hover:bg-white p-8 hoverLrounded-lg w-full max-w-md backdrop-filter backdrop-blur-lg bg-opacity-70 border-t border-gray-500"
                       onClick={() => {
                         setIsLogin(false);
                         localStorage.clear();

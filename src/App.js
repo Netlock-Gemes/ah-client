@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import AuthState from './context/auth/AuthState';
 import Profile from './pages/Profile';
 import PropertyDetails from './pages/PropertyDetails';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 
 function App() {
@@ -19,14 +21,14 @@ function App() {
 
           <Navbar />
           <Routes>
-            {/* <Route path='/login' element={<Login />} /> */}
-            {/* <Route path="/register" element={<Register />} /> */}
             <Route path='/' element={<Home />} />
             <Route path='/services' element={<Services />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
             <Route path="/property/:id" element={<PropertyDetails />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
           </Routes>
           <Footer />
         </AuthState>
