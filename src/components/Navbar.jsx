@@ -104,14 +104,14 @@ const Navbar = () => {
                   About Us
                 </Link>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              {/* <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Link
                   to="/experience"
                   className="text-white hover:text-yellow-400 transition duration-300 block lg:inline-block mt-2 lg:mt-0"
                 >
                   Experience
                 </Link>
-              </motion.div>
+              </motion.div> */}
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Link
                   to="/contact"
@@ -189,14 +189,14 @@ const Navbar = () => {
               About Us
             </Link>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          {/* <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <Link
               to="/experience"
               className="text-white hover:text-yellow-400 transition duration-300 block lg:inline-block mt-2 lg:mt-0"
             >
               Experience
             </Link>
-          </motion.div>
+          </motion.div> */}
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <Link
               to="/contact"
