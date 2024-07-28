@@ -269,6 +269,40 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+
+      <div className="container mx-auto px-6 py-16">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={animationVariants.fadeIn}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <h1 className="text-5xl font-bold mb-4">Why Choose Us</h1>
+          <p className="text-xl mb-6">
+            We at A.H. Enterprises are a real estate firm of 10 members, that
+            has been operating its business for the last 10 years in the regions
+            of Nalasopara, Virar, and Vasai. We deal in all kinds of properties,
+            including residential, commercial, bungalows, row houses,
+            commercial gala, plots, etc.
+          </p>
+          <p className="text-xl mb-6">
+            If you are looking to rent a property, buy or sell a property, or
+            make any kind of investment, don't look any further. Visit our
+            office or contact us, and we will together find the best match
+            according to your requirement and need.
+          </p>
+          <p className="text-xl mb-6">
+            We provide excellent customer service and experience that exceeds
+            one's expectations and overall changes their view on finding their
+            perfect home.
+          </p>
+          <p className="text-xl font-semibold">
+            Our main belief has always been that "EVERYTHING STARTS WITH THE
+            CUSTOMER."
+          </p>
+        </motion.div>
+      </div>
     </div>
   );
 };
