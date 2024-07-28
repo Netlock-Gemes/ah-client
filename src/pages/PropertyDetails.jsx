@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -10,15 +10,17 @@ import {
   FaEdit,
   FaPhone,
   FaRupeeSign,
+  FaTrash,
 } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
-import defaultImg from "../assets/images/2.jpg";
+import defaultImg from "../assets/images/imgnotfound.png";
 import authContext from "../context/auth/authContext";
 import EditPropertyModal from "../components/EditPropertyModal";
 import UserList from "../components/UserList";
 
 const PropertyDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [interested, setInterested] = useState(false);
@@ -63,7 +65,6 @@ const PropertyDetails = () => {
         setInterested(isInterested);
 
         if (loggedInUserData?.role === "admin") {
-          // Fetch all users only if the logged-in user is an admin
           const usersResponse = await fetch(
             `${process.env.REACT_APP_HOST}/api/auth/users`,
             {
@@ -73,7 +74,7 @@ const PropertyDetails = () => {
             }
           );
           if (!usersResponse.ok) {
-            throw new Error("Users not found");
+            console.log("Users not found");
           }
           const usersData = await usersResponse.json();
           setUsers(usersData);
@@ -122,6 +123,33 @@ const PropertyDetails = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_HOST}/api/properties/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Property deleted successfully");
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } else {
+        toast.error("Failed to delete property");
+      }
+    } catch (error) {
+      toast.error("Error deleting property");
+      console.error("Error deleting property:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen justify-center items-center">
@@ -143,14 +171,27 @@ const PropertyDetails = () => {
       ? property.images.map((img) => `${process.env.REACT_APP_HOST}/${img}`)
       : [defaultImg];
 
+  const handleImageError = (event) => {
+    event.target.src = defaultImg;
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-300 p-4 pt-24">
       <motion.div
-        className="p-3 md:p-8 bg-white rounded-lg w-full max-w-2xl md:max-w-4xl backdrop-filter backdrop-blur-lg bg-opacity-90 shadow-lg"
+        className="relative p-3 md:p-8 bg-white rounded-lg w-full max-w-2xl md:max-w-4xl backdrop-filter backdrop-blur-lg bg-opacity-90 shadow-lg"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
+        {loggedInUserData?.role === "admin" && (
+          <button
+            onClick={handleDelete}
+            className="absolute top-3 right-3 bg-red-600 text-white rounded-full p-2 hover:bg-red-700 transition duration-300 shadow-md"
+            aria-label="Delete Property"
+          >
+            <FaTrash className="h-6 w-6" />
+          </button>
+        )}
         <h1 className="text-3xl font-extrabold mb-6 text-center text-blue-900">
           {property.title}
         </h1>
@@ -161,7 +202,7 @@ const PropertyDetails = () => {
           autoPlay
           interval={5000}
           transitionTime={700}
-          className="mb-8 rounded-lg overflow-hidden shadow-md"
+          className="mb-8 rounded-lg overflow-hidden border border-gray-300 shadow-md"
         >
           {imageUrls.map((url, index) => (
             <motion.div
@@ -174,6 +215,7 @@ const PropertyDetails = () => {
                 src={url}
                 alt={`Property ${index + 1}`}
                 className="object-cover w-full h-full"
+                onError={handleImageError}
               />
             </motion.div>
           ))}

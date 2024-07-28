@@ -4,24 +4,22 @@ import { toast } from "react-toastify";
 const EditPropertyModal = ({ property, onClose, onSave }) => {
   const [updatedProperty, setUpdatedProperty] = useState({
     ...property,
-    images: []
+    images: [],
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedProperty({
       ...updatedProperty,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleFileChange = (e) => {
-    // Handle file changes if needed
-  };
+  // eslint-disable-next-line
+  const handleFileChange = (e) => {};
 
   const handleSave = async () => {
     try {
-      // Assuming you have a function to update the property details
       const response = await fetch(
         `${process.env.REACT_APP_HOST}/api/properties/${property._id}`,
         {
@@ -52,7 +50,9 @@ const EditPropertyModal = ({ property, onClose, onSave }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Edit Property</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Title
+          </label>
           <input
             type="text"
             name="title"
@@ -62,7 +62,9 @@ const EditPropertyModal = ({ property, onClose, onSave }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
           <textarea
             name="description"
             value={updatedProperty.description}
@@ -71,7 +73,9 @@ const EditPropertyModal = ({ property, onClose, onSave }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Price</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Price
+          </label>
           <input
             type="number"
             name="price"
@@ -81,7 +85,9 @@ const EditPropertyModal = ({ property, onClose, onSave }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Location</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Location
+          </label>
           <input
             type="text"
             name="location"

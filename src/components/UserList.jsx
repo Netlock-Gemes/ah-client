@@ -12,7 +12,6 @@ const UserList = ({ users, setUsers, showConnectButton }) => {
   const containerRef = useRef(null);
   const { loggedInUserData } = useContext(authContext);
 
-  // Filter out the logged-in user from the users list
   const filteredUsers = users.filter(
     (user) => user._id !== loggedInUserData._id
   );
@@ -21,7 +20,6 @@ const UserList = ({ users, setUsers, showConnectButton }) => {
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
-    // Scroll to top of the user list container
     if (containerRef.current) {
       window.scrollTo({
         top: containerRef.current.offsetTop,
@@ -54,7 +52,6 @@ const UserList = ({ users, setUsers, showConnectButton }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Update the users list
         setUsers(
           users.map((user) =>
             user._id === userId ? { ...user, role: newRole } : user

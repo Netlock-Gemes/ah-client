@@ -12,6 +12,7 @@ import PropertyDetails from './pages/PropertyDetails';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import AdminDashboard from './pages/AdminDashboard';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
         <AuthState>
 
           <Navbar />
+          <ToastContainer />
+
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/services' element={<Services />} />

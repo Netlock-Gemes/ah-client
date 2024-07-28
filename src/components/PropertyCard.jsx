@@ -6,19 +6,17 @@ import { useNavigate } from "react-router-dom";
 const PropertyCard = ({ property }) => {
   const navigate = useNavigate();
 
-  // State to handle image loading error
   const [imageSrc, setImageSrc] = useState(
     property?.images && property.images.length > 0
       ? `${process.env.REACT_APP_HOST}/${property.images[0]}`
       : defaultImg
   );
 
-  // Handle missing property or incomplete data
   const title = property?.title || "No Title";
   const location = property?.location || "No Location";
   const description = property?.description || "No Description";
   const price = property?.price || 0;
-  
+
   const formattedPrice = `₹${price.toLocaleString("en-IN")}`;
 
   const handleViewDetails = () => {
@@ -38,12 +36,10 @@ const PropertyCard = ({ property }) => {
         src={imageSrc}
         alt={title}
         className="w-full h-48 object-cover rounded-md mb-4 hover:scale-105 transition-all duration-300"
-        onError={() => setImageSrc(defaultImg)} // Set default image on error
+        onError={() => setImageSrc(defaultImg)}
       />
       <div className="flex-1">
-        <h2 className="text-xl font-bold text-gray-800 mb-2">
-          {title}
-        </h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-2">{title}</h2>
         <p className="text-gray-600 mb-1">{location}</p>
         <p className="text-gray-800 font-semibold text-lg mb-4">
           {formattedPrice}

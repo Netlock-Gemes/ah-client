@@ -14,14 +14,13 @@ import nothingImg from "../assets/images/nothing.png";
 const PropertyList = ({ properties, users }) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
-  const navigate = useNavigate(); // Hook for navigation
-  const containerRef = useRef(null); // Ref for the container element
+  const navigate = useNavigate();
+  const containerRef = useRef(null);
 
   const pageCount = Math.ceil(properties.length / itemsPerPage);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
-    // Scroll to top of the property list container
     if (containerRef.current) {
       window.scrollTo({
         top: containerRef.current.offsetTop,
@@ -96,7 +95,7 @@ const PropertyList = ({ properties, users }) => {
                 </div>
                 <button
                   className="mt-4 py-2 px-6 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition duration-300"
-                  onClick={() => navigate(`/property/${property._id}`)} // Navigation logic
+                  onClick={() => navigate(`/property/${property._id}`)}
                 >
                   View Details
                 </button>

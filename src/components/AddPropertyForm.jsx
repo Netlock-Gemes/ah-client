@@ -1,56 +1,55 @@
-import React, { useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const AddPropertyForm = ({ onAddProperty }) => {
   const [newProperty, setNewProperty] = useState({
-    title: '',
-    description: '',
-    price: '',
-    location: '',
-    images: []
+    title: "",
+    description: "",
+    price: "",
+    location: "",
+    images: [],
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewProperty({
       ...newProperty,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validation checks
     if (files.length > 3) {
-      toast.error('You can only upload a maximum of 3 files.');
-      e.target.value = ''; // Clear the input
+      toast.error("You can only upload a maximum of 3 files.");
+      e.target.value = "";
       return;
     }
 
-    const invalidFiles = files.filter(file => file.size > 1024 * 1024);
+    const invalidFiles = files.filter((file) => file.size > 1024 * 1024);
 
     if (invalidFiles.length > 0) {
-      toast.error('Each file must be smaller than 1 MB.');
-      e.target.value = ''; // Clear the input
+      toast.error("Each file must be smaller than 1 MB.");
+      e.target.value = "";
       return;
     }
 
     setNewProperty({
       ...newProperty,
-      images: files
+      images: files,
     });
   };
 
   const validateForm = () => {
     if (newProperty.images.length === 0) {
-      toast.error('Please select at least one image.');
+      toast.error("Please select at least one image.");
       return false;
     }
     if (newProperty.images.length > 3) {
-      toast.error('You can only upload a maximum of 3 files.');
+      toast.error("You can only upload a maximum of 3 files.");
       return false;
     }
     return true;
@@ -65,11 +64,11 @@ const AddPropertyForm = ({ onAddProperty }) => {
 
     onAddProperty(newProperty);
     setNewProperty({
-      title: '',
-      description: '',
-      price: '',
-      location: '',
-      images: []
+      title: "",
+      description: "",
+      price: "",
+      location: "",
+      images: [],
     });
   };
 
@@ -83,9 +82,17 @@ const AddPropertyForm = ({ onAddProperty }) => {
       <h2 className="text-3xl font-bold text-yellow-700 mb-6 flex items-center">
         <FaPlus className="text-yellow-600 text-2xl mr-3" /> Add Property
       </h2>
-      <form onSubmit={handleAddProperty} className="bg-yellow-50 border border-yellow-300 p-6 rounded-lg shadow-md space-y-4">
+      <form
+        onSubmit={handleAddProperty}
+        className="bg-yellow-50 border border-yellow-300 p-6 rounded-lg shadow-md space-y-4"
+      >
         <div className="space-y-2">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Title
+          </label>
           <input
             type="text"
             name="title"
@@ -99,7 +106,12 @@ const AddPropertyForm = ({ onAddProperty }) => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
           <textarea
             name="description"
             id="description"
@@ -112,7 +124,12 @@ const AddPropertyForm = ({ onAddProperty }) => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Price
+          </label>
           <input
             type="number"
             name="price"
@@ -126,7 +143,12 @@ const AddPropertyForm = ({ onAddProperty }) => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
+          <label
+            htmlFor="location"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Location
+          </label>
           <input
             type="text"
             name="location"
@@ -140,7 +162,12 @@ const AddPropertyForm = ({ onAddProperty }) => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="images" className="block text-sm font-medium text-gray-700">Images</label>
+          <label
+            htmlFor="images"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Images
+          </label>
           <input
             type="file"
             name="images"

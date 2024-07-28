@@ -110,7 +110,10 @@ const Profile = () => {
               whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
               whileTap={{ scale: 0.97 }}
             >
-              <Link to={"/admin-dashboard"} className="w-full py-2 px-4 flex justify-center items-center">
+              <Link
+                to={"/admin-dashboard"}
+                className="w-full py-2 px-4 flex justify-center items-center"
+              >
                 Open Admin Dashboard
               </Link>
             </motion.div>
@@ -120,7 +123,6 @@ const Profile = () => {
         </div>
       </motion.div>
 
-      {/* Interested Properties Section */}
       <div className="w-full mt-8">
         <div className="bg-white p-6 rounded-lg shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-60">
           <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">

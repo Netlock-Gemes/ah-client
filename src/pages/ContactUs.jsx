@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaMobileAlt,
-} from "react-icons/fa";
+import { FaEnvelope, FaMapMarkerAlt, FaMobileAlt } from "react-icons/fa";
 import heroImg from "../assets/images/4.jpg";
 import contactImg from "../assets/images/5.jpg";
 
@@ -20,11 +16,9 @@ const animationVariants = {
 };
 
 const ContactUs = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -58,6 +52,7 @@ const ContactUs = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        // eslint-disable-next-line no-unused-vars
         const result = await response.json();
         setMessage("Message Sent Successfully!");
         setFormData({
@@ -93,7 +88,6 @@ const ContactUs = () => {
 
   return (
     <div className="bg-gray-300">
-      {/* Hero Section */}
       <div
         className="bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImg})` }}
@@ -113,7 +107,6 @@ const ContactUs = () => {
         </motion.div>
       </div>
 
-      {/* Contact Form Section */}
       <div className="flex justify-center items-center px-6 py-16 shadow-gray-800">
         <motion.div
           initial="initial"
@@ -180,7 +173,6 @@ const ContactUs = () => {
         </motion.div>
       </div>
 
-      {/* Contact Information Section */}
       <div
         className="bg-cover bg-center text-white py-16"
         style={{ backgroundImage: `url(${contactImg})` }}
@@ -200,13 +192,16 @@ const ContactUs = () => {
                 Nallasopara (W) - 401 203.
               </li>
               <li className="flex items-center justify-center gap-2">
-                <FaMobileAlt className="text-blue-300" /> Hamdan Kachhawa - 7977416857
+                <FaMobileAlt className="text-blue-300" /> Hamdan Kachhawa -
+                7977416857
               </li>
               <li className="flex items-center justify-center gap-2">
-              <FaMobileAlt className="text-blue-300" /> Shadab Khan - 8983488363
+                <FaMobileAlt className="text-blue-300" /> Shadab Khan -
+                8983488363
               </li>
               <li className="flex items-center justify-center gap-2">
-                <FaEnvelope className="text-blue-300" /> hamdankachhawa96@gmail.com
+                <FaEnvelope className="text-blue-300" />{" "}
+                hamdankachhawa96@gmail.com
               </li>
               <li className="flex items-center justify-center gap-2">
                 <FaEnvelope className="text-blue-300" /> sk642127@gmail.com
